@@ -3,7 +3,6 @@ package services
 import models.user.User
 import models.userfollower.UserFollowers.{collection, isFollowing}
 import models.userfollower.{UserFollowers, UserFollowersConverter}
-
 import scala.collection.mutable.ListBuffer
 
 class UserService {

@@ -10,16 +10,13 @@ import models.user.User
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
+ * users'/followers' REST endpoints.
  */
 @Singleton
 class UserController @Inject()(cc: ControllerComponents, userService: UserService) extends AbstractController(cc) {
 
   /**
-   * Create an Action to render an HTML page with a welcome message.
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
+   * Creates a new user(if not exists)
    */
   def createUser = Action { request =>
     val body = request.body
@@ -32,12 +29,31 @@ class UserController @Inject()(cc: ControllerComponents, userService: UserServic
     Ok(Json.stringify(Json.toJson(res)))
   }
 
+  /**
+    * <p>{@code PUT: users/:user/followers/:follower}</p>
+    * A user {@code user} will follow another user {@code follower}
+    * @param user Parent user
+    * @param follower Follower of `user`
+    * @return
+    */
   def follow(user: String, follower: String) = Action { request =>
     val gson:Gson = new Gson()
     var res = userService.follow(user, follower)
     Ok(Json.stringify(Json.toJson(res)))
   }
 
+  /**
+    * <p>{@code GET: users/:user/followers}</p>
+    *
+    * Fetches paginated list of followers of given `user`.
+    * If pagination attributes i.e. {@code pageNumber} & {@code perPage} are not provided as query params, all the
+    * followers will be fetched at once.
+    *
+    * @param userName Whose follower needs to be fetched.
+    * @param pageNumber
+    * @param perPage
+    * @return
+    */
   def getFollowers(userName: String, pageNumber: Int, perPage: Int) = Action { request =>
     var res = userService.getFollowers(userName, pageNumber, perPage)
     Ok(Json.stringify(Json.toJson(res)))

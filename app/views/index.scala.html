@@ -10,7 +10,44 @@
  * argument is an `Html` object containing the body of the page.
  *@
 @main("Welcome to Messenger") {
-
     <h1>Welcome to Scala-Play messenger service.</h1>
-
+    <p> Here are the REST endpoints available - </p>
+    <div class="col-md-12">
+     <table class="table table-hover table-bordered">
+      <thead>
+       <tr>
+        <th scope="col">Method</th>
+        <th scope="col">URL</th>
+        <th scope="col">Body</th>
+        <th scope="col">Description</th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>GET</td>
+        <td>{host}/users/:userName/followers?pageNumber=1&perPage=20</td>
+        <td>NA</td>
+        <td>Fetches user's followers</td>
+       </tr>
+       <tr>
+        <td>PUT</td>
+        <td>{host}/users/:user/followers/:follower</td>
+        <td>NA</td>
+        <td>For a <b>user</b> to follow another user (<b>follower</b>)</td>
+       </tr>
+       <tr>
+        <td>POST</td>
+        <td>/users</td>
+        <td>
+         {
+         "userName": "sachin248",
+         "firstName": "Sachin",
+         "lastName": "Tendulkar"
+         }
+        </td>
+        <td>Creates a user if not exists.</td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
 }
