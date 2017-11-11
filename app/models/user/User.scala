@@ -17,7 +17,7 @@ object User {
   val collection = MongoConnector.getCollection(dbName = dbName, collName = collName)
 
   /**
-    * Persists user to database.
+    * Persists user in database.
     * @param user
     * @return
     */
