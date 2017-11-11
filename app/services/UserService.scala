@@ -1,6 +1,5 @@
 package services
 
-import com.mongodb.DBObject
 import models.user.User
 import models.userfollower.UserFollowers.{collection, isFollowing}
 import models.userfollower.{UserFollowers, UserFollowersConverter}
