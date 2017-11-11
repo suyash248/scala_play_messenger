@@ -6,15 +6,15 @@ import models.userfollower.UserFollowerProperties._
 object UserFollowersConverter {
   def convertToMongoObject(userFollowers: UserFollowers): DBObject = {
     MongoDBObject(
-      _ID -> userFollowers._id,
-      USER_ID -> userFollowers.userId
+      USER -> userFollowers.user,
+      FOLLOWER -> userFollowers.follower
     )
   }
 
   def convertFromMongoObject(db: DBObject): UserFollowers = {
     UserFollowers(
-      _id = db.getAsOrElse[ObjectId](_ID, null),
-      userId = db.getAsOrElse[ObjectId](USER_ID, null)
+      user = db.getAsOrElse[String](USER, ""),
+      follower = db.getAsOrElse[String](USER, "")
     )
   }
 }

@@ -4,17 +4,20 @@ import com.mongodb.casbah.Imports.{DBObject, MongoDBObject}
 import org.bson.types.ObjectId
 import services.MongoConnector
 
-case class User(userName: String, firstName: String, lastName: String) {
+case class User(userName: String, firstName: String, lastName: String)
 
-  val (dbName, collName) = UserProperties.getDBAncCollectionName()
+object User {
+  val (dbName, collName) = UserProperties.getDBAndCollectionName()
   val collection = MongoConnector.getCollection(dbName = dbName, collName = collName)
-  def insert() = {
-    collection.insert(UserConverter.convertToMongoObject(this))
+
+  def save(user: User) = collection.insert(UserConverter.convertToMongoObject(user))
+
+  def findById(id: ObjectId) = {
+    val query = MongoDBObject(UserProperties._ID -> id)
+    convertFromMongo(collection.findOne(query))
   }
 
-  def findOne(id: ObjectId) = {
-    convertFromMongo(collection.findOne(MongoDBObject(UserProperties._ID -> id)))
-  }
+  def isExist(userName: String): Boolean = findByUserName(userName) != None
 
   def findByUserName(userName :String) = {
     val query = MongoDBObject(UserProperties.USER_NAME -> userName)
@@ -35,5 +38,5 @@ object UserProperties {
   val FIRST_NAME = "firstName"
   val LAST_NAME = "lastName"
 
-  def getDBAncCollectionName() = ("twitter", "users")
+  def getDBAndCollectionName() = ("twitter", "users")
 }

@@ -19,7 +19,6 @@ class HomeController @Inject()(cc: ControllerComponents, userService: UserServic
    * a path of `/`.
    */
   def index = Action {
-    userService.test()
     Ok(views.html.index("Your new application is ready."))
   }
 
