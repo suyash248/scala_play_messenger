@@ -2,14 +2,7 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
-
-# An example controller showing a sample home page
 GET  /                                           controllers.HomeController.index
-# An example controller showing how to use dependency injection
-GET  /count                                      controllers.CountController.count
-# An example controller showing how to write asynchronous code
-GET  /message                                    controllers.AsyncController.message
-
 POST /users                                      controllers.UserController.createUser
 GET  /users/:userName/followers                  controllers.UserController.getFollowers(userName)
 PUT  /users/:user/followers/:follower            controllers.UserController.follow(user, follower)

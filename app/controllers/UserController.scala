@@ -2,8 +2,11 @@ package controllers
 
 import javax.inject._
 
+import com.google.gson.Gson
 import play.api.mvc._
+import play.api.libs.json._
 import services.UserService
+import models.user.User
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -19,16 +22,24 @@ class UserController @Inject()(cc: ControllerComponents, userService: UserServic
    * a path of `/`.
    */
   def createUser = Action { request =>
-    var bodyJson = request.body.asText
-    println(s"Body json is $bodyJson")
-    Ok(s"Trying to create user with json $bodyJson")
+    val body = request.body
+    if (body==None || body.asJson == None) {
+      Forbidden(Json.stringify(Json.toJson(Map("status"-> "error", "message"-> "Invalid request body"))))
+    }
+    implicit val fooFormat: Format[User] = Json.format[User]
+    val user: User = body.asJson.get.as[User]
+    val res = userService.createUser(user.userName, user.firstName, user.lastName)
+    Ok(Json.stringify(Json.toJson(res)))
   }
 
   def follow(user: String, follower: String) = Action { request =>
-    Ok(s"$user is trying to follow $follower")
+    val gson:Gson = new Gson()
+    var res = userService.follow(user, follower)
+    Ok(Json.stringify(Json.toJson(res)))
   }
 
   def getFollowers(userName: String) = Action { request =>
-    Ok(s"Trying to fetch all the followers of $userName")
+    var res = userService.getFollowers(userName)
+    Ok(Json.stringify(Json.toJson(res)))
   }
 }

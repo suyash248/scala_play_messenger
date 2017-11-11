@@ -5,6 +5,8 @@ import models.user.User
 import models.userfollower.UserFollowers.{collection, isFollowing}
 import models.userfollower.{UserFollowers, UserFollowersConverter}
 
+import scala.collection.mutable.ListBuffer
+
 class UserService {
 
   def follow(user: String, follower: String): Map[String, String] = {
@@ -26,11 +28,13 @@ class UserService {
     res
   }
 
-  def getFollowers(user: String): Map[String, Any] = {
-    val userFollowersBson = UserFollowers.getFollowers(user)
-    Map("status"-> "success",
-      "message"-> s"Total",
-      "followers"-> userFollowersBson)
+  def getFollowers(user: String): List[Map[String, String]] = {
+    var followers: ListBuffer[Map[String, String]] = ListBuffer()
+    var userFollowers = UserFollowers.getFollowers(user).foreach(mongoObj =>
+      followers += Map("user"-> mongoObj.get("user").toString,
+        "follower"-> mongoObj.get("follower").toString)
+    )
+    followers.toList
   }
 
   def createUser(userName: String, firstName: String, lastName: String): Map[String, String] = {
