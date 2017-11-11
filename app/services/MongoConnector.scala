@@ -1,10 +1,19 @@
 package services
 import com.mongodb.casbah.Imports._
 
+/**
+  * Initializes mongo connection.
+  */
 object MongoConnector{
+  // Intializing mongo client, other db attributes can be suplied in constructor if required.
   val connection = MongoClient()
-  print(s"Created mongo connection $connection")
 
+  /**
+    * Creates/gets a collection with name `collName`
+    * @param dbName
+    * @param collName
+    * @return
+    */
   def getCollection(dbName: String, collName: String) = {
     connection(dbName)(collName)
   }
