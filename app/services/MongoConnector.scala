@@ -5,7 +5,7 @@ import com.mongodb.casbah.Imports._
   * Initializes mongo connection.
   */
 object MongoConnector{
-  // Intializing mongo client, other db attributes can be suplied in constructor if required.
+  // Initializing mongo client, other db attributes can be suplied in constructor if required.
   val connection = MongoClient()
 
   /**
