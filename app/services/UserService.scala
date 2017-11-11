@@ -28,9 +28,9 @@ class UserService {
     res
   }
 
-  def getFollowers(user: String): List[Map[String, String]] = {
+  def getFollowers(user: String, pageNumber: Int, perPage: Int): List[Map[String, String]] = {
     var followers: ListBuffer[Map[String, String]] = ListBuffer()
-    var userFollowers = UserFollowers.getFollowers(user).foreach(mongoObj =>
+    var userFollowers = UserFollowers.getFollowers(user, pageNumber, perPage).foreach(mongoObj =>
       followers += Map("user"-> mongoObj.get("user").toString,
         "follower"-> mongoObj.get("follower").toString)
     )

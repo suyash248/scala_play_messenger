@@ -23,7 +23,7 @@ class UserController @Inject()(cc: ControllerComponents, userService: UserServic
    */
   def createUser = Action { request =>
     val body = request.body
-    if (body==None || body.asJson == None) {
+    if (body == None || body.asJson == None) {
       Forbidden(Json.stringify(Json.toJson(Map("status"-> "error", "message"-> "Invalid request body"))))
     }
     implicit val fooFormat: Format[User] = Json.format[User]
@@ -38,8 +38,8 @@ class UserController @Inject()(cc: ControllerComponents, userService: UserServic
     Ok(Json.stringify(Json.toJson(res)))
   }
 
-  def getFollowers(userName: String) = Action { request =>
-    var res = userService.getFollowers(userName)
+  def getFollowers(userName: String, pageNumber: Int, perPage: Int) = Action { request =>
+    var res = userService.getFollowers(userName, pageNumber, perPage)
     Ok(Json.stringify(Json.toJson(res)))
   }
 }

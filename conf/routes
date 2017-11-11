@@ -4,7 +4,7 @@
 # ~~~~
 GET  /                                           controllers.HomeController.index
 POST /users                                      controllers.UserController.createUser
-GET  /users/:userName/followers                  controllers.UserController.getFollowers(userName)
+GET  /users/:userName/followers                  controllers.UserController.getFollowers(userName, pageNumber: Int ?= 0, perPage: Int ?= 0)
 PUT  /users/:user/followers/:follower            controllers.UserController.follow(user, follower)
 
 # Map static resources from the /public folder to the /assets URL path

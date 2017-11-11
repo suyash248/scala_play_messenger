@@ -23,9 +23,14 @@ object UserFollowers {
     convertFromMongo(collection.findOne(query)) != None
   }
 
-  def getFollowers(user :String) = {
+  def getFollowers(user :String, pageNumber: Int, perPage: Int) = {
     val query = MongoDBObject(UserFollowerProperties.USER -> user)
-    collection.find(query)
+    if (pageNumber <=0 || perPage <=0 ) {
+      collection.find(query)
+    } else {
+      val followers = collection.find(query).skip((pageNumber - 1) * perPage).limit(perPage).toList
+      followers
+    }
   }
 
   def convertFromMongo(dbObj : Option[DBObject]) : Option[UserFollowers]= {
