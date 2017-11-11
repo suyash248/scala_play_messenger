@@ -7,6 +7,12 @@ import scala.collection.mutable.ListBuffer
 
 class UserService {
 
+  /**
+    * For `user` to follow another user (`follower`)
+    * @param user User to be followed
+    * @param follower `user`'s follower
+    * @return
+    */
   def follow(user: String, follower: String): Map[String, String] = {
     var res: Map[String, String] = Map()
     if (User.isExist(user) && User.isExist(follower)) {
@@ -26,6 +32,13 @@ class UserService {
     res
   }
 
+  /**
+    * Fetches paginated list of `user`'s followers.
+    * @param user User whose followers to be fetched.
+    * @param pageNumber current page number, starts from 1.
+    * @param perPage number of followers to be shown per page.
+    * @return list of followers
+    */
   def getFollowers(user: String, pageNumber: Int, perPage: Int): List[Map[String, String]] = {
     var followers: ListBuffer[Map[String, String]] = ListBuffer()
     var userFollowers = UserFollowers.getFollowers(user, pageNumber, perPage).foreach(mongoObj =>
@@ -35,6 +48,13 @@ class UserService {
     followers.toList
   }
 
+  /**
+    * Creates a new user if there is no such user exists with tlhe same userName.
+    * @param userName
+    * @param firstName
+    * @param lastName
+    * @return
+    */
   def createUser(userName: String, firstName: String, lastName: String): Map[String, String] = {
     var res: Map[String, String] = Map()
     if (User.isExist(userName)) {
