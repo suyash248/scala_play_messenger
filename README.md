@@ -1,4 +1,4 @@
-# Scala/Playframework messenger using mongoDB as datastore
+## Scala/Playframework messenger
 
 ### Prerequistes
 - Mongo running on http://127.0.0.1:27017
