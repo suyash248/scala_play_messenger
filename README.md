@@ -1,6 +1,8 @@
 ## Scala/Playframework messenger
 
 ### Prerequistes
+- Scala 2.12
+- JDK 1.8
 - Mongo running on http://127.0.0.1:27017
 
 ### Endpoints
